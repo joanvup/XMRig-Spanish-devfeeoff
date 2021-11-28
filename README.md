@@ -10,7 +10,7 @@ compilación en español del minero XMRig y con comisión de 0%
 [![GitHub stars](https://img.shields.io/github/stars/xmrig/xmrig.svg)](https://github.com/xmrig/xmrig/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/xmrig/xmrig.svg)](https://github.com/xmrig/xmrig/network)
 
-XMRig es un minero de CPU / GPU unificado de alto rendimiento, código abierto, multiplataforma RandomX, KawPow, CryptoNight , Ghistrider y AstroBWT y [RandomX benchmark] (https://xmrig.com/benchmark). Los binarios oficiales están disponibles para Windows, Linux, macOS y FreeBSD.
+XMRig es un minero de CPU / GPU unificado de alto rendimiento, código abierto, multiplataforma RandomX, KawPow, CryptoNight , Ghostrider y AstroBWT y [RandomX benchmark] (https://xmrig.com/benchmark). Los binarios oficiales están disponibles para Windows, Linux, macOS y FreeBSD.
 
 ## Mining backends
 - **CPU** (x64/ARMv8)
