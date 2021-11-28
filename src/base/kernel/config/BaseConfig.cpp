@@ -122,7 +122,7 @@ bool xmrig::BaseConfig::save()
     getJSON(doc);
 
     if (Json::save(m_fileName, doc)) {
-        LOG_NOTICE("%s " WHITE_BOLD("configuration saved to: \"%s\""), Tags::config(), m_fileName.data());
+        LOG_NOTICE("%s " WHITE_BOLD("configuración salvada en: \"%s\""), Tags::config(), m_fileName.data());
         return true;
     }
 
@@ -142,7 +142,7 @@ void xmrig::BaseConfig::printVersions()
     snprintf(buf, sizeof buf, "MSVC/%d", MSVC_VERSION);
 #   endif
 
-    Log::print(GREEN_BOLD(" * ") WHITE_BOLD("%-13s") CYAN_BOLD("%s/%s") WHITE_BOLD(" %s"), "ABOUT", APP_NAME, APP_VERSION, buf);
+    Log::print(GREEN_BOLD(" * ") WHITE_BOLD("%-13s") CYAN_BOLD("%s/%s") WHITE_BOLD(" %s"), "ACERCA DE", APP_NAME, APP_VERSION, buf);
 
     std::string libs;
 

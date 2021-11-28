@@ -92,10 +92,10 @@ xmrig::Msr::Msr() : d_ptr(new MsrPrivate())
     d_ptr->manager = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
     if (!d_ptr->manager) {
         if ((err = GetLastError()) == ERROR_ACCESS_DENIED) {
-            LOG_WARN("%s " YELLOW_BOLD("to access MSR registers Administrator privileges required."), tag());
+            LOG_WARN("%s " YELLOW_BOLD("para acceder a los registros MSR se requieren privilegios de Administrador."), tag());
         }
         else {
-            LOG_ERR("%s " RED("failed to open service control manager, error %u"), tag(), err);
+            LOG_ERR("%s " RED("no se pudo abrir el administrador de control de servicios, error %u"), tag(), err);
         }
 
         return;
@@ -110,7 +110,7 @@ xmrig::Msr::Msr() : d_ptr(new MsrPrivate())
     } while (err == ERROR_INSUFFICIENT_BUFFER);
 
     if (err != ERROR_SUCCESS) {
-        LOG_ERR("%s " RED("failed to get path to driver, error %u"), tag(), err);
+        LOG_ERR("%s " RED("fallo al obtener pa ruta del driver, error %u"), tag(), err);
         return;
     }
 
@@ -126,7 +126,7 @@ xmrig::Msr::Msr() : d_ptr(new MsrPrivate())
 
     d_ptr->service = OpenServiceW(d_ptr->manager, kServiceName, SERVICE_ALL_ACCESS);
     if (d_ptr->service) {
-        LOG_WARN("%s " YELLOW("service ") YELLOW_BOLD("WinRing0_1_2_0") YELLOW(" already exists"), tag());
+        LOG_WARN("%s " YELLOW("servicio ") YELLOW_BOLD("WinRing0_1_2_0") YELLOW(" ya existe"), tag());
 
         SERVICE_STATUS status;
         const auto rc = QueryServiceStatus(d_ptr->service, &status);
@@ -140,7 +140,7 @@ xmrig::Msr::Msr() : d_ptr(new MsrPrivate())
                 auto config = reinterpret_cast<LPQUERY_SERVICE_CONFIGA>(buffer.data());
 
                 if (QueryServiceConfigA(d_ptr->service, config, buffer.size(), &dwBytesNeeded)) {
-                    LOG_INFO("%s " YELLOW("service path: ") YELLOW_BOLD("\"%s\""), tag(), config->lpBinaryPathName);
+                    LOG_INFO("%s " YELLOW("ruta del servicio: ") YELLOW_BOLD("\"%s\""), tag(), config->lpBinaryPathName);
                 }
             }
         }

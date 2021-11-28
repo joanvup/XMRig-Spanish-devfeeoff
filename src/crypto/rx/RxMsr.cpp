@@ -87,7 +87,7 @@ static bool wrmsr(const MsrItems &preset, const std::vector<CpuThread> &threads,
             if (affinity < 0 || std::find(units.begin(), units.end(), affinity) == units.end()) {
                 cacheQoSDisabled = true;
 
-                LOG_WARN("%s " YELLOW_BOLD("cache QoS can only be enabled when all mining threads have affinity set"), Msr::tag());
+                LOG_WARN("%s " YELLOW_BOLD("La calidad del servicio de caché solo se puede habilitar cuando todos los subprocesos de minería tienen afinidad establecida"), Msr::tag());
                 break;
             }
 
@@ -146,16 +146,16 @@ bool xmrig::RxMsr::init(const RxConfig &config, const std::vector<CpuThread> &th
     m_cacheQoS        = config.cacheQoS();
 
     if (m_cacheQoS && !Cpu::info()->hasCatL3()) {
-        LOG_WARN("%s " YELLOW_BOLD("this CPU doesn't support cat_l3, cache QoS is unavailable"), Msr::tag());
+        LOG_WARN("%s " YELLOW_BOLD("esta CPU no soporta cat_l3, cache QoS no estara disponible"), Msr::tag());
 
         m_cacheQoS = false;
     }
 
     if ((m_enabled = wrmsr(preset, threads, m_cacheQoS, config.rdmsr()))) {
-        LOG_NOTICE("%s " GREEN_BOLD("register values for \"%s\" preset have been set successfully") BLACK_BOLD(" (%" PRIu64 " ms)"), Msr::tag(), config.msrPresetName(), Chrono::steadyMSecs() - ts);
+        LOG_NOTICE("%s " GREEN_BOLD("los valores registrados para \"%s\" han sido configurados satisfactoriamente") BLACK_BOLD(" (%" PRIu64 " ms)"), Msr::tag(), config.msrPresetName(), Chrono::steadyMSecs() - ts);
     }
     else {
-        LOG_ERR("%s " RED_BOLD("FAILED TO APPLY MSR MOD, HASHRATE WILL BE LOW"), Msr::tag());
+        LOG_ERR("%s " RED_BOLD("NO SE APLICÓ EL MOD MSR, EL HASHRATE SERÁ BAJO"), Msr::tag());
     }
 
     return isEnabled();
@@ -178,6 +178,6 @@ void xmrig::RxMsr::destroy()
     const uint64_t ts = Chrono::steadyMSecs();
 
     if (!wrmsr(items, std::vector<CpuThread>(), m_cacheQoS, false)) {
-        LOG_ERR("%s " RED_BOLD("failed to restore initial state" BLACK_BOLD(" (%" PRIu64 " ms)")), Msr::tag(), Chrono::steadyMSecs() - ts);
+        LOG_ERR("%s " RED_BOLD("fallo al restaurar el estado inicial" BLACK_BOLD(" (%" PRIu64 " ms)")), Msr::tag(), Chrono::steadyMSecs() - ts);
     }
 }

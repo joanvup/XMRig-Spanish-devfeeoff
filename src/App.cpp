@@ -56,7 +56,7 @@ xmrig::App::~App()
 int xmrig::App::exec()
 {
     if (!m_controller->isReady()) {
-        LOG_EMERG("no valid configuration found, try https://xmrig.com/wizard");
+        LOG_EMERG("no se encontro una configuracion valida, intente https://xmrig.com/wizard");
 
         return 2;
     }
@@ -97,7 +97,7 @@ int xmrig::App::exec()
 void xmrig::App::onConsoleCommand(char command)
 {
     if (command == 3) {
-        LOG_WARN("%s " YELLOW("Ctrl+C received, exiting"), Tags::signal());
+        LOG_WARN("%s " YELLOW("Ctrl+C recivido, saliendo"), Tags::signal());
         close();
     }
     else {

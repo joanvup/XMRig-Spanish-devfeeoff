@@ -261,7 +261,7 @@ public:
             for (uint32_t j = i; j < n1; ++j) {
                 ProfileScopeData* p = data[j];
                 const double t = p->m_totalCycles / p->m_totalSamples * 1e9 / ProfileScopeData::s_tscSpeed;
-                LOG_INFO("%s Thread %6s | %-30s | %7.3f%% | %9.0f ns",
+                LOG_INFO("%s Hilo %6s | %-30s | %7.3f%% | %9.0f ns",
                     Tags::profiler(),
                     p->m_threadId,
                     p->m_name,
@@ -318,7 +318,7 @@ public:
             h = "MH/s";
         }
 
-        LOG_INFO("%s " WHITE_BOLD("speed") " 10s/60s/15m " CYAN_BOLD("%s") CYAN(" %s %s ") CYAN_BOLD("%s") " max " CYAN_BOLD("%s %s"),
+        LOG_INFO("%s " WHITE_BOLD("velocidad") " 10s/60s/15m " CYAN_BOLD("%s") CYAN(" %s %s ") CYAN_BOLD("%s") " max " CYAN_BOLD("%s %s"),
                  Tags::miner(),
                  Hashrate::format(speed[0] * scale,                 num,          sizeof(num) / 4),
                  Hashrate::format(speed[1] * scale,                 num + 16,     sizeof(num) / 4),
@@ -502,7 +502,7 @@ void xmrig::Miner::setEnabled(bool enabled)
     }
 
     if (d_ptr->battery_power && enabled) {
-        LOG_INFO("%s " YELLOW_BOLD("can't resume while on battery power"), Tags::miner());
+        LOG_INFO("%s " YELLOW_BOLD("no se puede reanudar con la energía de la batería"), Tags::miner());
 
         return;
     }
@@ -511,14 +511,14 @@ void xmrig::Miner::setEnabled(bool enabled)
     d_ptr->m_taskbar.setEnabled(enabled);
 
     if (enabled) {
-        LOG_INFO("%s " GREEN_BOLD("resumed"), Tags::miner());
+        LOG_INFO("%s " GREEN_BOLD("reanudado"), Tags::miner());
     }
     else {
         if (d_ptr->battery_power) {
-            LOG_INFO("%s " YELLOW_BOLD("paused"), Tags::miner());
+            LOG_INFO("%s " YELLOW_BOLD("pausado"), Tags::miner());
         }
         else {
-            LOG_INFO("%s " YELLOW_BOLD("paused") ", press " MAGENTA_BG_BOLD(" r ") " to resume", Tags::miner());
+            LOG_INFO("%s " YELLOW_BOLD("pausado") ", presione " MAGENTA_BG_BOLD(" r ") " para reanudar", Tags::miner());
         }
     }
 
@@ -649,11 +649,11 @@ void xmrig::Miner::onTimer(const Timer *)
     };
 
     if (config->isPauseOnBattery()) {
-        autoPause(d_ptr->battery_power, Platform::isOnBatteryPower(), YELLOW_BOLD("on battery power"), GREEN_BOLD("on AC power"));
+        autoPause(d_ptr->battery_power, Platform::isOnBatteryPower(), YELLOW_BOLD("con energia de la bateria"), GREEN_BOLD("con energia de CA"));
     }
 
     if (config->isPauseOnActive()) {
-        autoPause(d_ptr->user_active, Platform::isUserActive(config->idleTime()), YELLOW_BOLD("user active"), GREEN_BOLD("user inactive"));
+        autoPause(d_ptr->user_active, Platform::isUserActive(config->idleTime()), YELLOW_BOLD("usuario activo"), GREEN_BOLD("usuario inactivo"));
     }
 
     if (stopMiner) {

@@ -119,7 +119,7 @@ void xmrig::Network::execCommand(char command)
 void xmrig::Network::onActive(IStrategy *strategy, IClient *client)
 {
     if (m_donate && m_donate == strategy) {
-        LOG_NOTICE("%s " WHITE_BOLD("dev donate started"), Tags::network());
+        LOG_NOTICE("%s " WHITE_BOLD("donación de desarrolador iniciada"), Tags::network());
         return;
     }
 
@@ -211,12 +211,12 @@ void xmrig::Network::onLogin(IStrategy *, IClient *client, rapidjson::Document &
 void xmrig::Network::onPause(IStrategy *strategy)
 {
     if (m_donate && m_donate == strategy) {
-        LOG_NOTICE("%s " WHITE_BOLD("dev donate finished"), Tags::network());
+        LOG_NOTICE("%s " WHITE_BOLD("donación de desarrolador terminada"), Tags::network());
         m_strategy->resume();
     }
 
     if (!m_strategy->isActive()) {
-        LOG_ERR("%s " RED("no active pools, stop mining"), Tags::network());
+        LOG_ERR("%s " RED("no hay pools activa, minado detenido"), Tags::network());
 
         return m_controller->miner()->pause();
     }
@@ -229,11 +229,11 @@ void xmrig::Network::onResultAccepted(IStrategy *, IClient *, const SubmitResult
     const char *scale = NetworkState::scaleDiff(diff);
 
     if (error) {
-        LOG_INFO("%s " RED_BOLD("rejected") " (%" PRId64 "/%" PRId64 ") diff " WHITE_BOLD("%" PRIu64 "%s") " " RED("\"%s\"") " " BLACK_BOLD("(%" PRIu64 " ms)"),
+        LOG_INFO("%s " RED_BOLD("rechazado") " (%" PRId64 "/%" PRId64 ") diff " WHITE_BOLD("%" PRIu64 "%s") " " RED("\"%s\"") " " BLACK_BOLD("(%" PRIu64 " ms)"),
                  backend_tag(result.backend), m_state->accepted(), m_state->rejected(), diff, scale, error, result.elapsed);
     }
     else {
-        LOG_INFO("%s " GREEN_BOLD("accepted") " (%" PRId64 "/%" PRId64 ") diff " WHITE_BOLD("%" PRIu64 "%s") " " BLACK_BOLD("(%" PRIu64 " ms)"),
+        LOG_INFO("%s " GREEN_BOLD("aceptado") " (%" PRId64 "/%" PRId64 ") diff " WHITE_BOLD("%" PRIu64 "%s") " " BLACK_BOLD("(%" PRIu64 " ms)"),
                  backend_tag(result.backend), m_state->accepted(), m_state->rejected(), diff, scale, result.elapsed);
     }
 }
@@ -284,10 +284,10 @@ void xmrig::Network::setJob(IClient *client, const Job &job, bool donate)
 
         char height_buf[64] = {};
         if (job.height() > 0) {
-            snprintf(height_buf, sizeof(height_buf), " height " WHITE_BOLD("%" PRIu64), job.height());
+            snprintf(height_buf, sizeof(height_buf), " altura " WHITE_BOLD("%" PRIu64), job.height());
         }
 
-        LOG_INFO("%s " MAGENTA_BOLD("new job") " from " WHITE_BOLD("%s:%d%s") " diff " WHITE_BOLD("%" PRIu64 "%s") " algo " WHITE_BOLD("%s") "%s%s",
+        LOG_INFO("%s " MAGENTA_BOLD("nuevo trabajo") " desde " WHITE_BOLD("%s:%d%s") " diff " WHITE_BOLD("%" PRIu64 "%s") " algo " WHITE_BOLD("%s") "%s%s",
                  Tags::network(), client->pool().host().data(), client->pool().port(), zmq_buf, diff, scale, job.algorithm().name(), height_buf, tx_buf);
     }
 

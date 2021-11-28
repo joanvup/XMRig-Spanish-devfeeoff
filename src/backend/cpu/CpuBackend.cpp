@@ -104,12 +104,12 @@ public:
     inline void print() const
     {
         if (m_started == 0) {
-            LOG_ERR("%s " RED_BOLD("disabled") YELLOW(" (failed to start threads)"), Tags::cpu());
+            LOG_ERR("%s " RED_BOLD("deshabilitado") YELLOW(" (no pudo iniciar hilos)"), Tags::cpu());
 
             return;
         }
 
-        LOG_INFO("%s" GREEN_BOLD(" READY") " threads %s%zu/%zu (%zu)" CLEAR " huge pages %s%1.0f%% %zu/%zu" CLEAR " memory " CYAN_BOLD("%zu KB") BLACK_BOLD(" (%" PRIu64 " ms)"),
+        LOG_INFO("%s" GREEN_BOLD(" PREPARADO") " HILOS %s%zu/%zu (%zu)" CLEAR " pag. grandes %s%1.0f%% %zu/%zu" CLEAR " memoria " CYAN_BOLD("%zu KB") BLACK_BOLD(" (%" PRIu64 " ms)"),
                  Tags::cpu(),
                  m_errors == 0 ? CYAN_BOLD_S : YELLOW_BOLD_S,
                  m_started, m_threads, m_ways,
@@ -141,7 +141,7 @@ public:
 
     inline void start()
     {
-        LOG_INFO("%s use profile " BLUE_BG(WHITE_BOLD_S " %s ") WHITE_BOLD_S " (" CYAN_BOLD("%zu") WHITE_BOLD(" thread%s)") " scratchpad " CYAN_BOLD("%zu KB"),
+        LOG_INFO("%s usando perfil " BLUE_BG(WHITE_BOLD_S " %s ") WHITE_BOLD_S " (" CYAN_BOLD("%zu") WHITE_BOLD(" hilo%s)") " block de notas " CYAN_BOLD("%zu KB"),
                  Tags::cpu(),
                  profileName.data(),
                  threads.size(),
@@ -293,7 +293,7 @@ void xmrig::CpuBackend::prepare(const Job &nextJob)
     const auto f = nextJob.algorithm().family();
     if ((f == Algorithm::ARGON2) || (f == Algorithm::RANDOM_X)) {
         if (argon2::Impl::select(d_ptr->controller->config()->cpu().argon2Impl())) {
-            LOG_INFO("%s use " WHITE_BOLD("argon2") " implementation " CSI "1;%dm" "%s",
+            LOG_INFO("%s use " WHITE_BOLD("argon2") " implementacion " CSI "1;%dm" "%s",
                      Tags::cpu(),
                      argon2::Impl::name() == "default" ? 33 : 32,
                      argon2::Impl::name().data()
@@ -312,7 +312,7 @@ void xmrig::CpuBackend::printHashrate(bool details)
 
     char num[8 * 3] = { 0 };
 
-    Log::print(WHITE_BOLD_S "|    CPU # | AFFINITY | 10s H/s | 60s H/s | 15m H/s |");
+    Log::print(WHITE_BOLD_S "|    CPU # | AFINIDAD | 10s H/s | 60s H/s | 15m H/s |");
 
     size_t i = 0;
     for (const CpuLaunchData &data : d_ptr->threads) {
@@ -357,7 +357,7 @@ void xmrig::CpuBackend::setJob(const Job &job)
     d_ptr->profileName  = cpu.threads().profileName(job.algorithm());
 
     if (d_ptr->profileName.isNull() || threads.empty()) {
-        LOG_WARN("%s " RED_BOLD("disabled") YELLOW(" (no suitable configuration found)"), Tags::cpu());
+        LOG_WARN("%s " RED_BOLD("deshabilitado") YELLOW(" (no se encontró una configuración adecuada)"), Tags::cpu());
 
         return stop();
     }
@@ -402,7 +402,7 @@ void xmrig::CpuBackend::stop()
     d_ptr->workers.stop();
     d_ptr->threads.clear();
 
-    LOG_INFO("%s" YELLOW(" stopped") BLACK_BOLD(" (%" PRIu64 " ms)"), Tags::cpu(), Chrono::steadyMSecs() - ts);
+    LOG_INFO("%s" YELLOW(" detenido") BLACK_BOLD(" (%" PRIu64 " ms)"), Tags::cpu(), Chrono::steadyMSecs() - ts);
 }
 
 

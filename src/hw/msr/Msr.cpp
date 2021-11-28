@@ -65,7 +65,7 @@ bool xmrig::Msr::write(uint32_t reg, uint64_t value, int32_t cpu, uint64_t mask,
 
     const bool result = wrmsr(reg, value, cpu);
     if (!result && verbose) {
-        LOG_WARN("%s " YELLOW_BOLD("cannot set MSR 0x%08" PRIx32 " to 0x%016" PRIx64), tag(), reg, value);
+        LOG_WARN("%s " YELLOW_BOLD("no se puedo establecer MSR 0x%08" PRIx32 " to 0x%016" PRIx64), tag(), reg, value);
     }
 
     return result;
@@ -80,7 +80,7 @@ xmrig::MsrItem xmrig::Msr::read(uint32_t reg, int32_t cpu, bool verbose) const
     }
 
     if (verbose) {
-        LOG_WARN("%s " YELLOW_BOLD("cannot read MSR 0x%08" PRIx32), tag(), reg);
+        LOG_WARN("%s " YELLOW_BOLD("no se pudo leer MSR 0x%08" PRIx32), tag(), reg);
     }
 
     return {};
